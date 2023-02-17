@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Escrever mensagem</title>
+
+    <link rel="stylesheet" href="./assets/css/main.css" type="text/css">
+
+</head>
+<body class="bg-gradient">
+    <div class="form-notification">
+        <form method="get"action='/sendNotification'>
+            <input type="text" name="title" placeholder="Title" id="title"  required/>
+
+            <div>
+                <button id="primeiro-nome-button" type="button" onclick="putTagCode('*primeiro_nome*')">*primeiro_nome*</button>
+                <button id="nome-completo-button" type="button" onclick="putTagCode('*nome_completo*')">*nome_completo*</button>
+                <button id="email-button" type="button"         onclick="putTagCode('*email*')">*email*</button>
+            </div>
+
+            <textarea name="message" rows="8" placeholder="Escreva sua mensagem aqui" id="message"></textarea>
+            <input type="submit" value="Enviar" >
+        </form>
+    </div>
+
+
+    <!-- change textarea notification -->
+    <script>
+        async function putTagCode(code_to_be_inserted){
+            console.log("clicado")
+            let textarea = document.getElementById("message");
+            textarea.value = textarea.value + "" + code_to_be_inserted + ""; 
+        }
+    </script>
+</body>
+</html>

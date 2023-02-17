@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+
+    <link rel="stylesheet" href="./assets/css/main.css" type="text/css">
+
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+
+</head>
+<body class="logpage">
+    <div class="logbox">
+        <button onclick="generateCode()" id="sendCodeButton">Send a code</button>
+        <form onsubmit="checkCode(); return false;">
+            <input type="text" disabled placeholder="*****" id="codefield" minlength="5" maxlength="5" required/>
+            <input type="submit" value="Entrar" onclick="">
+        </form>
+    </div>
+    <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+    <script>
+        async function generateCode(){
+            myUrl = await 'http://localhost:3000/generatecode';
+            axios.get(myUrl)
+                .then(function (response) {
+                    console.log(response.data);
+                    document.getElementById("codefield").disabled = false;
+                    document.getElementById("sendCodeButton").disabled = true;
+                    swal("Tudo certo", "Código enviado com sucesso", "success");
+                })
+                .catch(function (error) {
+                    console.log(error)
+                });
+        }
+        async function checkCode (){
+            const myCode = await document.getElementById("codefield").value;
+            
+            const myUrl = await 'http://localhost:3000/checkcode/' + myCode;
+            axios.get(myUrl)
+                .then(function (response) {
+                    console.log(response.data);
+                    if(response.data.status == "success"){
+                        window.location.href = 'http://localhost:3000/writeNotification'
+                    }else{
+                        console.log("falha ao logar")
+                    }
+                })
+                
+        }
+    </script>
+</body>
+</html>
